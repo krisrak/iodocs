@@ -233,8 +233,8 @@ function oauth2(req, res, next){
 
         if (apiConfig.oauth2.type == 'authorization-code') {
             var oauth2Params = {redirect_uri : callbackURL, response_type : 'code'};
-            for( var key in apiConfig.oauth2.authParams ) {
-                oauth2Params[key]= apiConfig.oauth2.authParams[key];
+            for( var param in apiConfig.oauth2.authParams ) {
+                oauth2Params[param]= apiConfig.oauth2.authParams[param];
             };
             var redirectUrl = oa.getAuthorizeUrl(oauth2Params);
 
@@ -252,8 +252,8 @@ function oauth2(req, res, next){
         else if (apiConfig.oauth2.type == 'implicit') {
             oa._authorizeUrl = oa._accessTokenUrl;
             var oauth2Params = oa.getAuthorizeUrl({redirect_uri : callbackURL, response_type : 'token'});
-            for( var key in apiConfig.oauth2.authParams ) {
-                oauth2Params[key]= apiConfig.oauth2.authParams[key];
+            for( var param in apiConfig.oauth2.authParams ) {
+                oauth2Params[param]= apiConfig.oauth2.authParams[param];
             };
             var redirectUrl = oa.getAuthorizeUrl(oauth2Params);
 
