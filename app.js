@@ -216,7 +216,8 @@ function oauth2(req, res, next){
                            apiSecret,
                            apiConfig.oauth2.baseSite,
                            apiConfig.oauth2.authorizeURL,
-                           apiConfig.oauth2.accessTokenURL);
+                           apiConfig.oauth2.accessTokenURL,
+                           apiConfig.oauth2.customHeaders);
 
         if (apiConfig.oauth2.tokenName) {
             oa.setAccessTokenName(apiConfig.oauth2.tokenName);
@@ -231,7 +232,11 @@ function oauth2(req, res, next){
         };
 
         if (apiConfig.oauth2.type == 'authorization-code') {
-            var redirectUrl = oa.getAuthorizeUrl({redirect_uri : callbackURL, response_type : 'code'});
+            var oauth2Params = {redirect_uri : callbackURL, response_type : 'code'};
+            for( var key in apiConfig.oauth2.authParams ) {
+                oauth2Params[key]= apiConfig.oauth2.authParams[key];
+            };
+            var redirectUrl = oa.getAuthorizeUrl(oauth2Params);
 
             db.set(key + ':apiKey', apiKey, redis.print);
             db.set(key + ':apiSecret', apiSecret, redis.print);
@@ -245,8 +250,12 @@ function oauth2(req, res, next){
             res.send({'signin': redirectUrl});
         }
         else if (apiConfig.oauth2.type == 'implicit') {
-            oa._authorizeUrl = oa._accessTokenUrl
-            var redirectUrl = oa.getAuthorizeUrl({redirect_uri : callbackURL, response_type : 'token'});
+            oa._authorizeUrl = oa._accessTokenUrl;
+            var oauth2Params = oa.getAuthorizeUrl({redirect_uri : callbackURL, response_type : 'token'});
+            for( var key in apiConfig.oauth2.authParams ) {
+                oauth2Params[key]= apiConfig.oauth2.authParams[key];
+            };
+            var redirectUrl = oa.getAuthorizeUrl(oauth2Params);
 
             db.set(key + ':apiKey', apiKey, redis.print);
             db.set(key + ':apiSecret', apiSecret, redis.print);
@@ -360,7 +369,8 @@ function oauth2Success(req, res, next) {
                    apiSecret,
                    apiConfig.oauth2.baseSite,
                    apiConfig.oauth2.authorizeURL,
-                   apiConfig.oauth2.accessTokenURL);
+                   apiConfig.oauth2.accessTokenURL,
+                   apiConfig.oauth2.customHeaders);
 
             if (apiConfig.oauth2.tokenName) {
                 oa.setAccessTokenName(apiConfig.oauth2.tokenName);
@@ -720,7 +730,8 @@ function processRequest(req, res, next) {
                            apiSecret,
                            apiConfig.oauth2.baseSite,
                            apiConfig.oauth2.authorizeURL,
-                           apiConfig.oauth2.accessTokenURL);
+                           apiConfig.oauth2.accessTokenURL,
+                           apiConfig.oauth2.customHeaders);
 
                     if (apiConfig.oauth2.tokenName) {
                         oa.setAccessTokenName(apiConfig.oauth2.tokenName);
