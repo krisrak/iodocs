@@ -1,0 +1,39 @@
+{
+  "endpoints": [
+    {
+      "name": "Collection Items: Create, read, update, delete",
+      "methods": [
+        {
+          "MethodName": "Get Items",
+          "Synopsis": "Returns the list of items, possibly filtered, from the collection.",
+          "HTTPMethod": "GET",
+          "URI": "/catalog/v1/datasets/:DATASET_ID/collections/:COLLECTION_ID/items",
+          "RequiresOAuth": "Y",
+          "parameters": [
+            {
+              "Name": "DATASET_ID",
+              "Required": "Y",
+              "Default": "7b03b948089d4123bd45f1c7f1a336ed",
+              "Type": "int",
+              "Description": "A Catalog dataset GUID"
+            },
+            {
+              "Name": "COLLECTION_ID",
+              "Required": "Y",
+              "Default": "133c56762e8949868aee3a90293fc3a8",
+              "Type": "int",
+              "Description": "A Catalog collection GUID"
+            },
+            {
+              "Name": "filter",
+              "Required": "N",
+              "Default": "",
+              "Type": "string",
+              "Description": "A comma-delimited list of values to look for."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

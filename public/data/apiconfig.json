@@ -1,4 +1,22 @@
-{
+{   
+    "intelcatalog": {
+      "name": "Intel Catalog Service",
+      "protocol": "https",
+      "baseURL": "api.intel.com",
+      "publicPath": "",
+      "privatePath": "",
+      "auth": "oauth2",
+      "oauth2": {
+        "type": "authorization-code",
+        "baseSite": "https://api.intel.com/",
+        "authorizeURL": "identityui/v2/auth",
+        "accessTokenURL": "identity/v2/token",
+        "customHeaders": "",
+        "authParams": {"scope": "recommendations:basic"},
+        "tokenName": "access_token",
+        "authorizationHeader": "Y"
+      }
+    },
     "klout": {
         "name": "Klout v2 API",
         "protocol": "http",
